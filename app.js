@@ -3,9 +3,15 @@ const app = express();
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const bodyParser = require('body-parser');
+const ejs = require('ejs');
+const bcrypt = require('bcrypt');
 
 
+
+ 
 const productRouter = require('./routes/product');
+const productRouterUser = require('./routes/user');
+const ProductModlesUser = require('./models/users');
 const productmodels = require('./models/products');
 
 mongoose.connect(config.database,{useNewUrlParser: true});
@@ -17,10 +23,14 @@ mongoose.connection.on('error', ( req, res, next)=>{
 	console.log('Darabase is not connected on :' + err)
 });
 
+app.set('view engine', 'ejs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 
+
 app.use('/register', productRouter);
+app.use('/register', productRouterUser);
 
 
 

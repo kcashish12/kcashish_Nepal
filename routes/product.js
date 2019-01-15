@@ -3,12 +3,20 @@ const router = express.Router();
 const Products = require('../models/products');
 const config = require('../config/database');
 
-router.get('/', (req, res, next)=>{
-	res.send('GET');
+router.get('/signup', (req, res, next)=>{
+	res.render('layout');
+
+});
+router.get('/home', (req, res, next)=>{
+	res.render('home');
+
+});
+router.get('/welcome', (req, res, next)=>{
+	res.render('welcome');
 
 });
 
-router.post('/', (req, res, next)=>{
+router.post('/signup', (req, res, next)=>{
 	const newProduct = new Products({
 		name: req.body.name,
 		price: req.body.price
@@ -19,6 +27,8 @@ router.post('/', (req, res, next)=>{
 			success: true,
 			msg:'Product is saved'
 		});
+		res.render('/signup');
+
 	})
 	.catch(err =>{
 		res.status(404).json({
@@ -26,6 +36,10 @@ router.post('/', (req, res, next)=>{
 			msg:'Product is not saved'
 		});
 	});
+
+});
+router.get('/contact', (req, res, next)=>{
+	res.render('contact');
 
 });
 
